@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Clock, ArrowRight, Flame, Sparkles, BookOpen, Rocket } from 'lucide-react';
+import { Clock, ArrowRight, Flame, Sparkles, BookOpen, Rocket, Zap } from 'lucide-react';
 import { courses } from '../data/courses';
 import { quizData } from '../data/quizData';
 import { CourseCardSkeleton } from './Skeleton';
 import QuizModal from './QuizModal';
+import PaymentModal from './PaymentModal';
 
 const badgeConfig = {
   'Most Popular':  { cls: 'bg-blue-600 text-white',   icon: <Flame className="w-3 h-3" /> },
@@ -22,7 +23,8 @@ const gradients = [
 
 const Courses = () => {
   const [loading, setLoading] = useState(true);
-  const [activeQuiz, setActiveQuiz] = useState(null); // { course, quizQuestions, color }
+  const [activeQuiz, setActiveQuiz] = useState(null);
+  const [activePayment, setActivePayment] = useState(null); // { course, color }
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 1200);
@@ -96,17 +98,26 @@ const Courses = () => {
                           ))}
                         </div>
 
-                        <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
-                          <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                        <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                          <div className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
                             <Clock className="w-3.5 h-3.5" /> {course.duration}
                           </div>
-                          <button
-                            onClick={() => openQuiz(course, i)}
-                            aria-label={`Enroll in ${course.title}`}
-                            className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-gradient-to-r ${gradients[i]} rounded-lg hover:scale-105 active:scale-95 transition-all shadow-sm`}
-                          >
-                            Enroll <ArrowRight className="w-3 h-3" />
-                          </button>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => openQuiz(course, i)}
+                              aria-label={`Quick test for ${course.title}`}
+                              className="flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold rounded-lg border-2 border-indigo-500 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 active:scale-95 transition-all"
+                            >
+                              <Zap className="w-3 h-3" /> Quick Test
+                            </button>
+                            <button
+                              onClick={() => setActivePayment({ course, color: gradients[i] })}
+                              aria-label={`Enroll in ${course.title}`}
+                              className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-gradient-to-r ${gradients[i]} rounded-lg hover:scale-105 active:scale-95 transition-all shadow-sm`}
+                            >
+                              Enroll <ArrowRight className="w-3 h-3" />
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </motion.article>
@@ -117,7 +128,6 @@ const Courses = () => {
         </div>
       </section>
 
-      {/* Quiz Modal */}
       <AnimatePresence>
         {activeQuiz && (
           <QuizModal
@@ -127,7 +137,18 @@ const Courses = () => {
             onClose={() => setActiveQuiz(null)}
             onEnroll={() => {
               setActiveQuiz(null);
+              setActivePayment({ course: activeQuiz.course, color: activeQuiz.color });
             }}
+          />
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activePayment && (
+          <PaymentModal
+            course={activePayment.course}
+            color={activePayment.color}
+            onClose={() => setActivePayment(null)}
           />
         )}
       </AnimatePresence>

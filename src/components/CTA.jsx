@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles, ShieldCheck, Users, Building2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, Users, Building2 } from 'lucide-react';
 
 const trustItems = [
   { icon: <Users className="w-3.5 h-3.5" />,     label: '75,000+ students trained' },
@@ -34,10 +34,6 @@ const CTA = () => (
         viewport={{ once: true }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
-        <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-7 rounded-full bg-white/10 text-white/90 text-xs font-semibold border border-white/20 backdrop-blur-sm">
-          <Sparkles className="w-3.5 h-3.5 text-blue-200" /> Start free — no credit card needed
-        </span>
-
         <h2 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black text-white leading-tight tracking-tight text-balance">
           Your Dream Placement<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-indigo-200">

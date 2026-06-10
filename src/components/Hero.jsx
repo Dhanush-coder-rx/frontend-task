@@ -77,7 +77,7 @@ const Hero = () => (
                 Campus Drive
               </span>
               {/* Underline SVG */}
-              <svg className="absolute -bottom-1.5 left-0 w-full overflow-visible hidden sm:block" viewBox="0 0 320 10" fill="none" preserveAspectRatio="none">
+              <svg className="absolute -bottom-1.5 left-0 w-full overflow-visible hidden lg:block" viewBox="0 0 320 10" fill="none" preserveAspectRatio="none">
                 <path d="M2 7 Q80 1 160 7 Q240 13 318 7" stroke="url(#heroUL)" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
                 <defs>
                   <linearGradient id="heroUL" x1="0" y1="0" x2="1" y2="0">
